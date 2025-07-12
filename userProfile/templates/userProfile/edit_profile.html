@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block title %}Edit Profile {% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow">
+  <h2 class="text-2xl font-bold mb-4">Edit Profile</h2>
+
+  <form method="POST" enctype="multipart/form-data" class="space-y-4">
+    {% csrf_token %}
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Bio</label>
+      <textarea name="bio" rows="3" class="w-full mt-1 p-2 border rounded-lg">{{ form.bio.value }}</textarea>
+      {{ form.bio.errors }}
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Location</label>
+      <input type="text" name="location" value="{{ form.location.value }}" class="w-full mt-1 p-2 border rounded-lg" />
+      {{ form.location.errors }}
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Profile Picture</label>
+      {{ form.profile_picture }}
+      {{ form.profile_picture.errors }}
+    </div>
+
+    <div class="text-right">
+      <button type="submit" class="bg-blue-500 text-black px-2 py-2 rounded hover:bg-blue-600">
+        Save Changes
+      </button>
+      
+    </div>
+  </form>
+</div>
+{% endblock %}

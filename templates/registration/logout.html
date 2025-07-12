@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}Log Out{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
+  <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-green-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+    
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">You've been logged out</h1>
+    
+    <p class="text-gray-600 mb-6">Thanks for spending some quality time with us today.</p>
+    
+    <a href="{% url 'login' %}" class="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+      Log In Again
+    </a>
+    
+    <p class="mt-4 text-gray-500 text-sm">
+      Or go back to <a href="{% url 'tweet_list' %}" class="text-blue-600 hover:text-blue-500">home page</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
