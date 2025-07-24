@@ -81,15 +81,31 @@ WSGI_APPLICATION = 'chaiheadq.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-import os
+import environ
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env = environ.Env()
+environ.Env.read_env()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR + 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.oftunbjzwvzwqnkkooig',
+        'PASSWORD': 'postGresqlTwitter',
+        'HOST': 'aws-0-us-east-2.pooler.supabase.com',
+        'PORT': '6543',
+        'OPTIONS': {
+            'sslmode': 'require',  # Essential for Supabase
+        },
+        'TEST': {
+            'SERIALIZE': False,  # Prevents shell checks
+        }
     }
+}
+
+# Optional: SSL for secure connection
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',  # Force SSL
 }
 
 
@@ -135,8 +151,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = 'static/'
 STATICFILES_DIR = os.path.join(BASE_DIR, 'static')
@@ -145,3 +159,9 @@ LOGIN_URL = '/accounts/login'
 
 LOGIN_REDIRECT_URL = '/tweet/'
 LOGIN_REDIRECT_URL = '/tweet/'
+
+
+
+# settings.py
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

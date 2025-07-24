@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-
-# Create your views here.
 from .models import Tweet, Comment, Like
 from .forms import TweetForm, UserRegisterationForm
 from django.contrib.auth import authenticate
@@ -8,9 +6,12 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-# Like a tweet
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+import os
+from uuid import uuid4
+from supabase import create_client
+from django.conf import settings
 
 
 
@@ -28,19 +29,21 @@ def tweet_list(request):
 
 @login_required
 def tweet_create(request):
-    form = None
     if request.method == 'POST':
-        form = TweetForm(request.POST,request.FILES)
+        form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
-            tweet=form.save(commit=False)
+            tweet = form.save(commit=False)
             tweet.user = request.user
             tweet.save()
-            return redirect('tweet_list')
+            form.save_m2m()  # In case you have any many-to-many fields
+            return redirect('tweet_list')  # Change if redirecting elsewhere
     else:
         form = TweetForm()
-        return render(request,'tweet/tweet_form.html',{
-            'form':form
-        })
+    
+    return render(request, 'tweet/tweet_form.html', {'form': form})
+
+
+
 
 @login_required
 def tweet_edit(request,tweet_id):

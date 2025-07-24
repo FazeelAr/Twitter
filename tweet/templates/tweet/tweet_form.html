@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
-{% block title %}{% if form.instance.pk %}Edit Tweet{% else %}Create Tweet{% endif %}{% endblock %}
+{% block title %}
+{% if form.instance.pk %}
+    Edit Tweet
+{% else %}
+    Create Tweet
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto p-6">
@@ -12,10 +18,9 @@
             {% endif %}
         </h1>
         
-        <form method="post" enctype="multipart/form-data" class="space-y-4">
+        <form method="post" enctype="multipart/form-data" class="space-y-4" autocomplete="off">
             {% csrf_token %}
             
-            <!-- Text Field -->
             <div class="space-y-2">
                 <label for="{{ form.text.id_for_label }}" class="block text-sm font-medium text-gray-700">
                     What's happening?
