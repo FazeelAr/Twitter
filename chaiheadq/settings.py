@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&28a^%^8+d7c@@1+8$c39anln_x3j)3o%7%(2489)y@=e%4&)z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -84,21 +84,22 @@ WSGI_APPLICATION = 'chaiheadq.wsgi.application'
 import environ
 
 env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
 environ.Env.read_env()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.oftunbjzwvzwqnkkooig',
-        'PASSWORD': 'postGresqlTwitter',
-        'HOST': 'aws-0-us-east-2.pooler.supabase.com',
-        'PORT': '6543',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
         'OPTIONS': {
-            'sslmode': 'require',  # Essential for Supabase
+            'sslmode': 'require',  
         },
         'TEST': {
-            'SERIALIZE': False,  # Prevents shell checks
+            'SERIALIZE': False,  
         }
     }
 }
